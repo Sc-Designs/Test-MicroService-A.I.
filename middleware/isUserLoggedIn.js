@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const isOrgLoggedIn = async (req, res, next) => {
+const isUserLoggedIn = async (req, res, next) => {
   try {
-    let token = req.cookies?.OrganizationToken;
+    let token = req.cookies?.UserToken;
 
     if (!token && req.headers.authorization?.startsWith("Bearer ")) {
       token = req.headers.authorization.split(" ")[1];
@@ -10,19 +10,18 @@ const isOrgLoggedIn = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ error: "Unauthorized" });
     }
-    const response = await axios.get(`${process.env.ORG_API_URL}/profile`, {
+    const response = await axios.get(`${process.env.USER_API_URL}/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.data) {
+    if (!response.data || !response.data.user) {
       return res.status(403).json({ error: "Access denied" });
     }
-    req.org = response.data.Org;
     return next();
   } catch (error) {
     console.log(error);
     return res.status(403).json({ error: "Invalid or expired token" });
   }
 };
-export default isOrgLoggedIn;
+export default isUserLoggedIn;
