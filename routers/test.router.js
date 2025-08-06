@@ -12,7 +12,6 @@ import isUserLoggedIn from '../middleware/isUserLoggedIn.js';
 
 router.get(
   "/send-test-questions",
-  isUserLoggedIn,
   tryCatch(sendQuestionWithLimit)
 );
 router.post("/questions-created", isOrgLoggedIn, tryCatch(createQuestion));

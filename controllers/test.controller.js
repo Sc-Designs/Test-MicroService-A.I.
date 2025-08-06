@@ -1,20 +1,35 @@
 import mongoose from 'mongoose';
 import { Test } from '../models/test.model.js';
 
-const sendQuestionWithLimit = async (req,res)=>{
-    const start = parseInt(req.query.start) || 0;
-    const limit = parseInt(req.query.limit) || 10;
+const sendQuestionWithLimit = async (req, res) => {
+  const start = parseInt(req.query.start) || 0;
+  const limit = parseInt(req.query.limit) || 10;
+  const query = req.query.query?.trim() || "";
 
-    const total = await Test.countDocuments();
-    const questions = await Test.find().skip(start).limit(limit);
+  let filter = {};
+  if (query) {
+    filter = {
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+      ],
+    };
+  }
+  
+  let results = await Test.find(filter)
+    .skip(start)
+    .limit(limit + 1)
+    .sort({ createdAt: -1 });
 
-    res.json({
-      total,
-      questions,
-      hasMore: start + limit < total,
-      nextStart: start + limit,
-    });
-}
+  const hasMore = results.length > limit;
+  if (hasMore) results.pop();
+
+  res.json({
+    questions: results,
+    hasMore,
+    nextStart: hasMore ? start + limit : null,
+  });
+};
 
 const createTest = async (req, res) => {
   try {
