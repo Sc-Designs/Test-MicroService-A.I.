@@ -83,4 +83,16 @@ const SearchTests = async (req, res) => {
   }
 };
 
-export { sendQuestionWithLimit, createTest, SearchTests };
+const SendSetsData = async (req, res) => {
+  try {
+    const test = await Test.findById(req.params.testId).populate("questions").lean();
+    if (!test) return res.status(404).json({ message: "Test not found" });
+
+    res.status(200).json({ name: test.title, questions: test.questions });
+  } catch (err) {
+    console.error("Failed to fetch test:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+export { sendQuestionWithLimit, createTest, SearchTests, SendSetsData };
