@@ -52,7 +52,7 @@ const createTest = async (req, res) => {
 
 const SearchTests = async (req, res) => {
   const { query = "", page = 1 } = req.query;
-  const limit = 10;
+  const limit = 15;
   const skip = (page - 1) * limit;
   if (!req.org) {
     return res.status(403).json({ message: "Organization not found" });

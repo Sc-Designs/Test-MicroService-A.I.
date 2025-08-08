@@ -12,7 +12,6 @@ import {
 } from "../controllers/question.controller.js";
 import isOrgLoggedIn from '../middleware/isOrgLoggedIn.js';
 import tryCatch from '../utils/tryCatch.js';
-import isUserLoggedIn from '../middleware/isUserLoggedIn.js';
 
 router.get(
   "/send-test-questions",

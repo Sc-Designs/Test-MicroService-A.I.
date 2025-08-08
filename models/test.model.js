@@ -11,6 +11,10 @@ const TestSchema = new mongoose.Schema(
       required: true
     }],
     createdBy: { type: mongoose.Schema.Types.ObjectId },
+    owner: {
+      type: String,
+      default: "Company",
+    }
   },
   { timestamps: true }
 );
