@@ -19,6 +19,7 @@ const isOrgLoggedIn = async (req, res, next) => {
       return res.status(403).json({ error: "Access denied" });
     }
     req.org = response.data.Org;
+    req.org.token = token;
     return next();
   } catch (error) {
     console.log(error);
