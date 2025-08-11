@@ -26,7 +26,7 @@ const sendQuestionWithLimit = async (req, res) => {
 
   const hasMore = results.length > limit;
   if (hasMore) results.pop();
-
+  console.log(`Sending questions from ${start} to ${start + limit}, hasMore: ${hasMore}, query: ${query}, answers: ${results}`);
   res.json({
     questions: results,
     hasMore,
