@@ -11,6 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 app.use("/", testRouter);
 
-app.listen(3000, ()=>{
+app.listen(process.env.PORT || 3000, ()=>{
     console.log("👷🏽‍♂️ Test Service Running on 3006...");
 })
