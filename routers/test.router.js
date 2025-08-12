@@ -7,6 +7,7 @@ import {
   SendSetsData,
   deleteTest,
   editTest,
+  SendQuestionData,
 } from "../controllers/test.controller.js";
 import {
   createQuestion,
@@ -19,6 +20,7 @@ router.get(
   "/send-test-questions",
   tryCatch(sendQuestionWithLimit)
 );
+router.get("/test/:id", tryCatch(SendQuestionData));
 router.get("/set-update/:testId", tryCatch(SendSetsData));
 router.get("/question/:id", tryCatch(questionSend));
 router.post("/questions-created", isOrgLoggedIn, tryCatch(createQuestion));

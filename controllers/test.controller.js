@@ -207,6 +207,23 @@ const editTest = async (req, res) => {
   }
 };
 
+const SendQuestionData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ message: "Test ID is required" });
+
+    const test = await Test.findById(id).populate("questions").lean();
+    if (!test) return res.status(404).json({ message: "Test not found" });
+
+    res.status(200).json({
+      name: test.title,
+      questions: test.questions,
+    });
+  } catch (error) {
+    console.error("Error fetching test questions:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 export {
   sendQuestionWithLimit,
@@ -215,4 +232,5 @@ export {
   SendSetsData,
   deleteTest,
   editTest,
+  SendQuestionData,
 };
