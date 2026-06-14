@@ -11,9 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 
 app.get("/",(req, res)=>{
-  res.send("Health Check");
+  res.send("👷🏽‍♂️ Test API is working ...");
 });
 app.use("/api", testRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

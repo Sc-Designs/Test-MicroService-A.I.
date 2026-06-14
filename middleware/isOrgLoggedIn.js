@@ -10,7 +10,7 @@ const isOrgLoggedIn = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ error: "Unauthorized" });
     }
-    const response = await axios.get(`${process.env.ORG_API_URL}/profile`, {
+    const response = await axios.get(`${process.env.ORG_API_URL}/api/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
